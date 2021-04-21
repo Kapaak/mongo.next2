@@ -7,10 +7,12 @@
     "start": "next start"
   },
   "dependencies": {
+    "axios": "^0.21.1",
     "mongodb": "^3.5.9",
     "next": "latest",
     "react": "^16.13.1",
     "react-dom": "^16.13.1"
   },
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {}
 }
