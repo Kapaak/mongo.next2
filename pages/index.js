@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { connectToDatabase } from "../util/mongodb";
 import axios from "axios";
+import toast from "react-hot-toast";
 //components
 import Form from "../components/Form";
 import ListOfTodos from "../components/ListOfTodos";
@@ -16,6 +17,8 @@ const fetchData = async () => {
 export default function Home({ isConnected }) {
 	const [todos, setTodos] = useState([]);
 	const [error, setError] = useState(false);
+	const notifySubmit = text => toast.success(text);
+	const notifyError = text => toast.error(text);
 
 	useEffect(() => {
 		fetchData().then(resp => setTodos(resp));
@@ -32,10 +35,10 @@ export default function Home({ isConnected }) {
 				setTodos(prevTodos => [...prevTodos, { todo, date, completed: false }]);
 				console.log(todos);
 				console.log("created");
-				// notifySubmit("Submited");
+				notifySubmit("Submited");
 			}
 		} catch (err) {
-			console.log(err);
+			notifyError(err.message);
 		}
 	};
 
@@ -46,11 +49,10 @@ export default function Home({ isConnected }) {
 			if (resp.statusText === "OK") {
 				const newTodos = [...todos].filter(todo => todo !== todoDelete);
 				setTodos(newTodos);
-				// notifySubmit("Successfully deleted");
+				notifySubmit("Successfully deleted");
 			}
 		} catch (err) {
-			// notifyError(err.message);
-			console.log(err);
+			notifyError(err.message);
 		}
 	};
 
@@ -82,7 +84,7 @@ export default function Home({ isConnected }) {
 					todos={todos}
 					error={error}
 					handleDelete={handleDelete}
-					handleComplete={() => console.log("complete kek")}
+					handleComplete={handleComplete}
 				/>
 			</div>
 		</FlexContainer>
