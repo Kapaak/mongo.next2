@@ -5,6 +5,7 @@ import toast from "react-hot-toast";
 //components
 import Form from "../components/Form";
 import ListOfTodos from "../components/ListOfTodos";
+import { notifyError, notifySubmit } from "../components/notifications";
 //styles
 import { FlexContainer } from "../styles/Global";
 
@@ -17,8 +18,6 @@ const fetchData = async () => {
 export default function Home({ isConnected }) {
 	const [todos, setTodos] = useState([]);
 	const [error, setError] = useState(false);
-	const notifySubmit = text => toast.success(text);
-	const notifyError = text => toast.error(text);
 
 	useEffect(() => {
 		fetchData().then(resp => setTodos(resp));
@@ -98,5 +97,6 @@ export async function getServerSideProps(context) {
 
 	return {
 		props: { isConnected },
+		revalidate: 1,
 	};
 }
