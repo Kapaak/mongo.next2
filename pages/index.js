@@ -4,7 +4,6 @@ import axios from "axios";
 //components
 import Form from "../components/Form";
 import ListOfTodos from "../components/ListOfTodos";
-import { fetchData } from "../components/fetchData";
 import { notifyError, notifySubmit } from "../components/notifications";
 //styles
 import { FlexContainer, ErrorContainer } from "../styles/Global";
@@ -12,10 +11,7 @@ import { FlexContainer, ErrorContainer } from "../styles/Global";
 export default function Home({ isConnected, properties }) {
 	console.log(properties);
 	const [todos, setTodos] = useState([]);
-	// useEffect(() => {
-	// 	fetchData(setTodos);
-	// 	console.log("refetched");
-	// }, [todos.length]);
+
 	useEffect(() => setTodos(properties), []);
 
 	const handleSubmit = async (todo, date) => {
@@ -87,7 +83,7 @@ export default function Home({ isConnected, properties }) {
 	);
 }
 
-export async function getServerSideProps(context) {
+export async function getStaticProps(context) {
 	const { client, db } = await connectToDatabase();
 	const isConnected = await client.isConnected();
 	const todos = await db.collection("Todos").find({}).toArray();
@@ -98,6 +94,7 @@ export async function getServerSideProps(context) {
 
 	return {
 		props: { isConnected, properties },
+		revalidate: 1,
 		//kdyz tu pridam dalsi async funkci, tak to hlasi err, proc?
 		//taky kdyz se podivam do clientu, tka nenajdu nikdy client.isConnected(), kde to najdu
 	};
