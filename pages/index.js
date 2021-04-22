@@ -9,13 +9,14 @@ import { notifyError, notifySubmit } from "../components/notifications";
 //styles
 import { FlexContainer, ErrorContainer } from "../styles/Global";
 
-export default function Home({ isConnected }) {
+export default function Home({ isConnected, properties }) {
+	console.log(properties);
 	const [todos, setTodos] = useState([]);
-
-	useEffect(() => {
-		fetchData(setTodos);
-		console.log("refetched");
-	}, [todos.length]);
+	// useEffect(() => {
+	// 	fetchData(setTodos);
+	// 	console.log("refetched");
+	// }, [todos.length]);
+	useEffect(() => setTodos(properties), []);
 
 	const handleSubmit = async (todo, date) => {
 		try {
@@ -86,14 +87,17 @@ export default function Home({ isConnected }) {
 	);
 }
 
-export async function getStaticProps(context) {
-	const { client } = await connectToDatabase();
-
+export async function getServerSideProps(context) {
+	const { client, db } = await connectToDatabase();
 	const isConnected = await client.isConnected();
+	const todos = await db.collection("Todos").find({}).toArray();
+	const properties = JSON.parse(JSON.stringify(todos));
+
+	// const res = await axios.get("/api/todos");
+	// const data = await res.data;
 
 	return {
-		props: { isConnected },
-		revalidate: 1,
-		//nefacha, na co presne tahle funkce je ?
+		props: { isConnected, properties },
+		//kdyz tu pridam dalsi async funkci, tak to hlasi err, proc?
 	};
 }
