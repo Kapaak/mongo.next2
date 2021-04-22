@@ -99,5 +99,6 @@ export async function getServerSideProps(context) {
 	return {
 		props: { isConnected, properties },
 		//kdyz tu pridam dalsi async funkci, tak to hlasi err, proc?
+		//taky kdyz se podivam do clientu, tka nenajdu nikdy client.isConnected(), kde to najdu
 	};
 }
