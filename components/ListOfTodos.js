@@ -1,32 +1,19 @@
 import Todo from "./Todo";
-import { ErrorContainer } from "../styles/Global";
 
-const ListOfTodos = ({
-	todos,
-	error,
-	errorMessage = `Oops, there was a problem when connecting to the database.`,
-	handleDelete,
-	handleComplete,
-}) => {
+const ListOfTodos = ({ todos, handleDelete, handleComplete }) => {
 	return (
-		<>
-			{error ? (
-				<ErrorContainer>{errorMessage}</ErrorContainer>
-			) : (
-				<ul>
-					{todos.map((todo, index) => {
-						return (
-							<Todo
-								todo={todo}
-								key={index}
-								handleDelete={handleDelete}
-								handleComplete={handleComplete}
-							/>
-						);
-					})}
-				</ul>
-			)}
-		</>
+		<ul>
+			{todos.map((todo, index) => {
+				return (
+					<Todo
+						todo={todo}
+						key={index}
+						handleDelete={handleDelete}
+						handleComplete={handleComplete}
+					/>
+				);
+			})}
+		</ul>
 	);
 };
 

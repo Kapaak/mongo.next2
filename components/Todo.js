@@ -1,13 +1,8 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheck, faTimes } from "@fortawesome/free-solid-svg-icons";
+import { formatDate } from "../components/utils/formatDate";
 
 const Todo = ({ todo, handleDelete, handleComplete }) => {
-	const formatDate = date => {
-		let dateFormat = new Date(date);
-		return new Intl.DateTimeFormat("en-GB", {
-			dateStyle: "full",
-		}).format(dateFormat);
-	};
 	return (
 		<li className={todo.completed ? "completed" : ""}>
 			<div className="text">

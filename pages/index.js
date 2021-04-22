@@ -1,26 +1,19 @@
 import React, { useState, useEffect } from "react";
 import { connectToDatabase } from "../util/mongodb";
 import axios from "axios";
-import toast from "react-hot-toast";
 //components
 import Form from "../components/Form";
 import ListOfTodos from "../components/ListOfTodos";
+import { fetchData } from "../components/fetchData";
 import { notifyError, notifySubmit } from "../components/notifications";
 //styles
-import { FlexContainer } from "../styles/Global";
-
-const fetchData = async () => {
-	const data = await axios.get("/api/todos");
-	const resp = data.data;
-	return resp;
-};
+import { FlexContainer, ErrorContainer } from "../styles/Global";
 
 export default function Home({ isConnected }) {
 	const [todos, setTodos] = useState([]);
-	const [error, setError] = useState(false);
 
 	useEffect(() => {
-		fetchData().then(resp => setTodos(resp));
+		fetchData(setTodos);
 		console.log("refetched");
 	}, [todos.length]);
 
@@ -33,7 +26,6 @@ export default function Home({ isConnected }) {
 			});
 			if ((resp.status = 200)) {
 				setTodos(prevTodos => [...prevTodos, { todo, date, completed: false }]);
-				console.log("created");
 				notifySubmit("Submited");
 			}
 		} catch (err) {
@@ -73,19 +65,24 @@ export default function Home({ isConnected }) {
 			notifyError(err.message);
 		}
 	};
-
+	console.log(isConnected);
 	return (
 		<FlexContainer>
-			<h1>this is my database!</h1>
-			<div>
-				<Form handleSubmit={handleSubmit} />
-				<ListOfTodos
-					todos={todos}
-					error={error}
-					handleDelete={handleDelete}
-					handleComplete={handleComplete}
-				/>
-			</div>
+			<h1>This is my task list.</h1>
+			{isConnected ? (
+				<div>
+					<Form handleSubmit={handleSubmit} />
+					<ListOfTodos
+						todos={todos}
+						handleDelete={handleDelete}
+						handleComplete={handleComplete}
+					/>
+				</div>
+			) : (
+				<ErrorContainer>
+					No database connection, try to refresh the page.
+				</ErrorContainer>
+			)}
 		</FlexContainer>
 	);
 }
@@ -98,5 +95,6 @@ export async function getStaticProps(context) {
 	return {
 		props: { isConnected },
 		revalidate: 1,
+		//nefacha, na co presne tahle funkce je ?
 	};
 }

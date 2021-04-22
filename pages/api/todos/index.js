@@ -9,7 +9,6 @@ export default async (req, res) => {
 		// .sort({ metacritic: -1 })
 		// .limit(20)
 		// .toArray();
-
 		res.json(todos);
 		console.log(req.method);
 	}
@@ -18,7 +17,6 @@ export default async (req, res) => {
 		const todos = await db.collection("Todos").insertOne(req.body);
 		res.json(todos);
 		console.log(req.method);
-		console.log(req.body);
 	}
 	if (req.method === "DELETE") {
 		const { _id, ...rest } = req.body;
