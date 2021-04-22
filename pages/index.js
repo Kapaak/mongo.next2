@@ -90,7 +90,7 @@ export default function Home({ isConnected }) {
 	);
 }
 
-export async function getServerSideProps(context) {
+export async function getStaticProps(context) {
 	const { client } = await connectToDatabase();
 
 	const isConnected = await client.isConnected();
