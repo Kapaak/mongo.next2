@@ -65,7 +65,6 @@ export default function Home({ isConnected }) {
 			notifyError(err.message);
 		}
 	};
-	console.log(isConnected);
 	return (
 		<FlexContainer>
 			<h1>This is my task list.</h1>
