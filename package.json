@@ -7,12 +7,19 @@
     "start": "next start"
   },
   "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^1.2.35",
+    "@fortawesome/free-solid-svg-icons": "^5.15.3",
+    "@fortawesome/react-fontawesome": "^0.1.14",
     "axios": "^0.21.1",
     "mongodb": "^3.5.9",
     "next": "latest",
     "react": "^16.13.1",
-    "react-dom": "^16.13.1"
+    "react-dom": "^16.13.1",
+    "react-hot-toast": "^1.0.2",
+    "styled-components": "^5.2.3"
   },
   "license": "MIT",
-  "devDependencies": {}
+  "devDependencies": {
+    "babel-plugin-styled-components": "^1.12.0"
+  }
 }
