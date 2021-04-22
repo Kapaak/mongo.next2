@@ -33,12 +33,12 @@ export default function Home({ isConnected }) {
 				completed: false,
 			});
 			console.log(resp.statusText);
-			if (resp.statusText === "OK") {
-				setTodos(prevTodos => [...prevTodos, { todo, date, completed: false }]);
-				console.log(todos);
-				console.log("created");
-				notifySubmit("Submited");
-			}
+			// if (resp.statusText === "OK") {
+			setTodos(prevTodos => [...prevTodos, { todo, date, completed: false }]);
+			console.log(todos);
+			console.log("created");
+			notifySubmit("Submited");
+			// }
 		} catch (err) {
 			notifyError(err.message);
 		}
