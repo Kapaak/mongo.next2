@@ -32,7 +32,7 @@ export default function Home({ isConnected }) {
 				date,
 				completed: false,
 			});
-			console.log(resp.statusText);
+			console.log(resp);
 			// if (resp.statusText === "OK") {
 			setTodos(prevTodos => [...prevTodos, { todo, date, completed: false }]);
 			console.log(todos);
