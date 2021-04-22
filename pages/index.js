@@ -22,6 +22,7 @@ export default function Home({ isConnected }) {
 
 	useEffect(() => {
 		fetchData().then(resp => setTodos(resp));
+		console.log("refetched");
 	}, [todos.length]);
 
 	const handleSubmit = async (todo, date) => {
