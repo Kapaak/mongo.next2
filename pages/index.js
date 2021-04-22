@@ -32,13 +32,11 @@ export default function Home({ isConnected }) {
 				date,
 				completed: false,
 			});
-			console.log(resp);
-			// if (resp.statusText === "OK") {
-			setTodos(prevTodos => [...prevTodos, { todo, date, completed: false }]);
-			console.log(todos);
-			console.log("created");
-			notifySubmit("Submited");
-			// }
+			if ((resp.status = 200)) {
+				setTodos(prevTodos => [...prevTodos, { todo, date, completed: false }]);
+				console.log("created");
+				notifySubmit("Submited");
+			}
 		} catch (err) {
 			notifyError(err.message);
 		}
@@ -48,7 +46,7 @@ export default function Home({ isConnected }) {
 		try {
 			const resp = await axios.delete("/api/todos", { data: todoDelete });
 			console.log(resp.statusText);
-			if (resp.statusText === "OK") {
+			if (resp.status === 200) {
 				const newTodos = [...todos].filter(todo => todo !== todoDelete);
 				setTodos(newTodos);
 				notifySubmit("Successfully deleted");
@@ -64,7 +62,7 @@ export default function Home({ isConnected }) {
 		try {
 			const resp = await axios.put("/api/todos", newTodo);
 
-			if (resp.statusText === "OK") {
+			if (resp.status === 200) {
 				const newTodos = [...todos];
 				newTodos.map(el =>
 					el === todo ? (el.completed = !el.completed) : null
